@@ -16,10 +16,10 @@ class DefaultFirebaseConfig {
     } else {
       // Android
       return const FirebaseOptions(
-        appId: '1:909432165261:android:c14f06a85302cce2dae3c4',
-        apiKey: 'AIzaSyCzQO_sgx0qMrxPZ3whVS5BKKj8sgwgRUo',
-        projectId: 'cukashmir-23c02',
-        messagingSenderId: '909432165261',
+        appId: '1:66599593714:android:50433d29ed811e97ee526b',
+        apiKey: 'AIzaSyAB-_BJZub8qAYPhK5cO-4V11tgEEyGUg4',
+        projectId: 'cukadmin',
+        messagingSenderId: '66599593714',
       );
 
     }
