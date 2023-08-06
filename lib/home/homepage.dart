@@ -13,6 +13,9 @@ class _MyWidgetState extends State<CRUDEoperation> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _numberController = TextEditingController();
   final TextEditingController _snController = TextEditingController();
+  final TextEditingController _phnController = TextEditingController();
+  final TextEditingController _deptController = TextEditingController();
+  final TextEditingController _desigController = TextEditingController();
   final TextEditingController _searchController = TextEditingController();
 
   final CollectionReference _items =
@@ -31,53 +34,79 @@ class _MyWidgetState extends State<CRUDEoperation> {
                 right: 20,
                 left: 20,
                 bottom: MediaQuery.of(ctx).viewInsets.bottom + 20),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Center(
-                  child: Text(
-                    "Create your item",
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Center(
+                    child: Text(
+                      "Create your item",
+                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
                   ),
-                ),
-                TextField(
-                  controller: _nameController,
-                  decoration: const InputDecoration(
-                      labelText: 'Name', hintText: 'eg.Elon'),
-                ),
-                TextField(
-                  keyboardType: TextInputType.number,
-                  controller: _snController,
-                  decoration:
-                  const InputDecoration(labelText: 'S.N', hintText: 'eg.1'),
-                ),
-                TextField(
-                  keyboardType: TextInputType.number,
-                  controller: _numberController,
-                  decoration: const InputDecoration(
-                      labelText: 'Number', hintText: 'eg.10'),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                ElevatedButton(
-                    onPressed: () async {
-                      final String name = _nameController.text;
-                      final int? sn = int.tryParse(_snController.text);
-                      final int? number = int.tryParse(_numberController.text);
-                      if (number != null) {
-                        await _items
-                            .add({"name": name, "number": number, "sn": sn});
-                        _nameController.text = '';
-                        _snController.text = '';
-                        _numberController.text = '';
+                  TextField(
+                    controller: _nameController,
+                    decoration: const InputDecoration(
+                        labelText: 'Name', hintText: 'eg.Elon'),
+                  ),
+                  TextField(
+                    keyboardType: TextInputType.number,
+                    controller: _snController,
+                    decoration:
+                    const InputDecoration(labelText: 'S.N', hintText: 'eg.1'),
+                  ),
+                  TextField(
+                    keyboardType: TextInputType.number,
+                    controller: _numberController,
+                    decoration: const InputDecoration(
+                        labelText: 'Number', hintText: 'eg.10'),
+                  ),
+                  TextField(
+                    keyboardType: TextInputType.number,
+                    controller: _phnController,
+                    decoration: const InputDecoration(
+                        labelText: 'Phone', hintText: 'eg.10'),
+                  ),
+                  TextField(
+                    keyboardType: TextInputType.number,
+                    controller: _deptController,
+                    decoration: const InputDecoration(
+                        labelText: 'Dept', hintText: 'eg.10'),
+                  ),
+                  TextField(
+                    keyboardType: TextInputType.number,
+                    controller: _desigController,
+                    decoration: const InputDecoration(
+                        labelText: 'Designation', hintText: 'eg.10'),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  ElevatedButton(
+                      onPressed: () async {
+                        final String name = _nameController.text;
+                        final String phone = _phnController.text;
+                        final String dept = _deptController.text;
+                        final String desig = _desigController.text;
+                        final int? sn = int.tryParse(_snController.text);
+                        final int? number = int.tryParse(_numberController.text);
+                        if (number != null) {
+                          await _items
+                              .add({"name": name, "number": number, "sn": sn,"phone":phone,"department":dept,"designation":desig});
+                          _nameController.text = '';
+                          _snController.text = '';
+                          _numberController.text = '';
+                          _phnController.text='';
+                          _deptController.text='';
+                          _desigController.text='';
 
-                        Navigator.of(context).pop();
-                      }
-                    },
-                    child: const Text("Create"))
-              ],
+                          Navigator.of(context).pop();
+                        }
+                      },
+                      child: const Text("Create"))
+                ],
+              ),
             ),
           );
         });
@@ -89,6 +118,9 @@ class _MyWidgetState extends State<CRUDEoperation> {
       _nameController.text = documentSnapshot['name'];
       _snController.text = documentSnapshot['sn'].toString();
       _numberController.text = documentSnapshot['number'].toString();
+      _phnController.text = documentSnapshot['phone'].toString();
+      _deptController.text = documentSnapshot['department'].toString();
+      _desigController.text = documentSnapshot['designation'].toString();
     }
     await showModalBottomSheet(
         isScrollControlled: true,
@@ -127,21 +159,43 @@ class _MyWidgetState extends State<CRUDEoperation> {
                   decoration: const InputDecoration(
                       labelText: 'Number', hintText: 'eg.10'),
                 ),
+                TextField(
+                  controller: _phnController,
+                  decoration: const InputDecoration(
+                      labelText: 'phone', hintText: 'eg.Elon'),
+                ),
+                TextField(
+                  controller: _deptController,
+                  decoration: const InputDecoration(
+                      labelText: 'department', hintText: 'eg.Elon'),
+                ),
+                TextField(
+                  controller: _desigController,
+                  decoration: const InputDecoration(
+                      labelText: 'designation', hintText: 'eg.Elon'),
+                ),
                 const SizedBox(
                   height: 20,
                 ),
                 ElevatedButton(
                     onPressed: () async {
                       final String name = _nameController.text;
+                      final String phone = _phnController.text;
+                      final String dept = _deptController.text;
+                      final String desig = _desigController.text;
                       final int? sn = int.tryParse(_snController.text);
                       final int? number = int.tryParse(_numberController.text);
+
                       if (number != null) {
                         await _items
                             .doc(documentSnapshot!.id)
-                            .update({"name": name, "number": number, "sn": sn});
+                            .update({"name": name, "number": number, "sn": sn,"phone":phone,"department":dept,"Designation":desig});
                         _nameController.text = '';
                         _snController.text = '';
                         _numberController.text = '';
+                        _phnController.text='';
+                        _deptController.text='';
+                        _desigController.text='';
 
                         Navigator.of(context).pop();
                       }
@@ -159,7 +213,7 @@ class _MyWidgetState extends State<CRUDEoperation> {
 
     // for snackBar
     ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("You have successfully deleted a itmes")));
+        const SnackBar(content: Text("You have successfully deleted a item")));
   }
 
   void _onSearchChanged(String value) {
